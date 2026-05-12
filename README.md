@@ -1,11 +1,17 @@
 # Hue Firelight
 
-Realistic fire/flame effect for Philips Hue color bulbs on Linux. Two implementations:
+Realistic fire/flame effect for Philips Hue color bulbs on Linux.
 
-| Script | Transport | Refresh | Smoothness | Setup cost |
+> **Use `hue-flame-stream.py`.** It's the one that actually looks like fire.
+>
+> The repo ships two scripts. They run the same flame algorithm but talk to your bridge over different transports — and the difference between them is the difference between playing a game at 10 FPS and 50 FPS. Both technically render the flame; only one *feels* like a real flame.
+>
+> `hue-flame.py` (REST) is included as a fallback for setups that can't use the Entertainment API (no Bridge V2+, no Entertainment Area configured, etc.). If that's not you, skip it.
+
+| Script | Transport | Refresh | Feel | Setup |
 |---|---|---|---|---|
-| `hue-flame.py` | HTTPS REST (V1 API) | ~8 Hz/light (bridge rate-limit) | Visible step-fade between targets | Minimal — just an app key |
-| `hue-flame-stream.py` | DTLS-PSK over UDP (Entertainment API v2) | 30-50 Hz | Hue-Sync-grade smooth | Requires an Entertainment configuration on the bridge |
+| **`hue-flame-stream.py`** ← recommended | DTLS-PSK / UDP (Entertainment API v2) | 30-50 Hz | Smooth, real fire | Bridge V2+ with an Entertainment Area |
+| `hue-flame.py` (fallback) | HTTPS REST (V1 API) | ~8 Hz/light | Choppy, visibly stepped | Any bridge + app key |
 
 Both use the same walking-state flame algorithm: each bulb independently picks color/brightness targets weighted across four flame regions (orange body / deep red-orange / gutter dip / bright yellow peak), then walks toward each target with a per-tick step cap so motion ramps rather than teleports. State distribution and step sizes were tuned by hand to match what real fire looks like to the eye.
 
