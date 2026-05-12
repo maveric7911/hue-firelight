@@ -1,0 +1,26 @@
+[Unit]
+Description=Hue Firelight: flame stream on Hue bulbs
+Documentation=https://github.com/maveric7911/hue-firelight
+# Wait for the graphical session — network is up by then and the user's
+# session env (DISPLAY etc.) is established. PartOf so we stop cleanly
+# when the session ends — that lets the script's SIGINT handler run
+# its final V2 API stop + close the DTLS socket.
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+# Assumes you cloned to ~/projects/hue-firelight. Adjust if you put it
+# somewhere else, or override with `systemctl --user edit hue-firelight`.
+ExecStart=%h/projects/hue-firelight/hue-flame-stream.py
+Restart=on-failure
+RestartSec=10
+# Streamer's signal handler is on SIGINT and runs the entertainment_configuration
+# stop + closes the DTLS socket cleanly. Default SIGTERM would skip that.
+KillSignal=SIGINT
+TimeoutStopSec=12
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical-session.target

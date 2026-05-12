@@ -146,12 +146,25 @@ On every tick we walk current values toward the target with capped per-tick step
 
 The capped step size means yellow peaks have to **climb through** orange — you see the flame building up rather than teleporting to bright. Each bulb starts with randomized initial state and a small phase offset so they don't flicker in lockstep.
 
+## Autostart on login
+
+```sh
+./install.sh
+```
+
+That installs `systemd/hue-firelight.service` as a user unit (with `ExecStart` rewritten to wherever you cloned the repo), reloads systemd, enables it for `graphical-session.target`, and starts it now. The unit stops cleanly on logout via SIGINT so the Hue entertainment session deactivates.
+
+Check it: `systemctl --user status hue-firelight` and `journalctl --user -u hue-firelight -f`.
+
+Remove later: `./uninstall.sh` (config is left intact).
+
 ## Files
 
 - `hue-flame.py` — REST flame loop
 - `hue-flame-stream.py` — Entertainment-API streaming flame loop
 - `hue_config.py` — credential and target-list loader (used by both scripts)
 - `config.example.json` — template for `~/.config/hue-firelight/config.json`
+- `systemd/hue-firelight.service` — optional autostart unit (see Autostart on login)
 
 ## Security
 
