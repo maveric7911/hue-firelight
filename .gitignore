@@ -1,0 +1,11 @@
+# Credentials never go in the repo — canonical path is ~/.config/hue-firelight/config.json
+config.json
+.env
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Editor / OS junk
+*.swp
+.DS_Store

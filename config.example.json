@@ -1,0 +1,13 @@
+{
+  "bridge": "192.168.1.100",
+  "app_key": "<paste the 'username' returned by the bridge during pairing>",
+  "client_key": "<paste the 'clientkey' returned during pairing (32 hex chars)>",
+  "ent_config": "<UUID of your entertainment_configuration from /clip/v2/resource/entertainment_configuration>",
+  "lights": [1, 2, 3, 4],
+  "light_uuids": {
+    "1": "<V2 UUID of light 1 from /clip/v2/resource/light>",
+    "2": "<V2 UUID of light 2>",
+    "3": "<V2 UUID of light 3>",
+    "4": "<V2 UUID of light 4>"
+  }
+}
